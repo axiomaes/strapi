@@ -1,0 +1,9 @@
+{
+  "captainVersion": "4",
+  "services": [
+    {
+      "containerHttpPort": "1337",
+      "dockerfilePath": "./Dockerfile"
+    }
+  ]
+}
