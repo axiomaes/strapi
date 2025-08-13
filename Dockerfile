@@ -9,7 +9,7 @@ RUN apk add --no-cache python3 make g++ && \
 WORKDIR /srv/app
 
 # Instala Strapi CLI
-RUN npm install -g create-strapi-app@4.20.0
+RUN npm install -g create-strapi-app@5.22.0
 
 # Crea el proyecto Strapi
 RUN npx create-strapi-app my-app --quickstart --no-run
