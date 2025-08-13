@@ -1,23 +1,23 @@
-# Usa Node LTS
-FROM node:18-alpine
+# Usa una imagen oficial con Node.js 18
+FROM node:18
 
-# Instala dependencias del sistema necesarias
-RUN apk add --no-cache python3 make g++ && \
-    npm install -g npm@latest
+# Define directorio de trabajo
+WORKDIR /app
 
-# Crea directorio para la app
-WORKDIR /srv/app
+# Copia los archivos de dependencias primero para aprovechar el cache
+COPY package.json yarn.lock ./
 
-# Instala Strapi CLI
-RUN npm install -g create-strapi-app@5.22.0
+# Instala dependencias
+RUN yarn install --frozen-lockfile
 
-# Crea el proyecto Strapi
-RUN npx create-strapi-app my-app --quickstart --no-run
+# Copia el resto del proyecto
+COPY . .
 
-WORKDIR /srv/app/my-app
+# Construye el panel de administración
+RUN yarn build
 
-# Expone el puerto por defecto
+# Expone el puerto usado por Strapi
 EXPOSE 1337
 
-# Comando por defecto
-CMD ["npm", "run", "develop"]
+# Lanza el servidor en producción
+CMD ["yarn", "start"]
